@@ -1,6 +1,6 @@
  const express = require('express');
  const mongoose = require('mongoose');
-
+ const todoHandler = require('./routeHandler/todoHandler')
  //express app initialization
  const app = express();
  app.use(express.json());
@@ -9,8 +9,9 @@
 mongoose.connect("mongodb://localhost/todos")
 .then(() => console.log("Connection Successful"))
 .catch((err) => console.log(err))
-//aplication routes
 
+//aplication routes
+app.use('/todo',todoHandler);
 
 //default app error handling
 
