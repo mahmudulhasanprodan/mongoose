@@ -4,8 +4,8 @@ const route = express.Router();
 const todoSchema = require('../schemas/todoSchema');
 const Todo = new mongoose.model('Todo',todoSchema); 
 //get todo by all
-route.get('/',async (req,res) => {
-   await Todo.find({status : "active"}).select({
+route.get('/', (req,res) => {
+    Todo.find({status : "active"}).select({
     _id : 0,
     __v : 0,
     date: 0,
@@ -75,7 +75,17 @@ route.put('/:id',async (req,res) => {
 
 //delete todo 
 route.delete('/',async (req,res) => {
-
+ await Todo.deleteOne({_id: req.params.id}).then((data) => {
+        res.status(200).json({
+          Data: data,
+          message: "Todo deleted successfully"
+        })
+     }).catch((err) => {
+        res.status(500).json({
+        error : "There was a serverside err"
+       })
+     })
+  
 });
 
 module.exports = route;
