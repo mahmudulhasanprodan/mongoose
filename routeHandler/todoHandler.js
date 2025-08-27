@@ -29,9 +29,9 @@ route.get('/:id',async (req,res) => {
 });
 
 //post todo by post
-route.post('/',async (req,res) => {
+route.post('/', (req,res) => {
      const newtodo = new Todo(req.body);
-     await newtodo.save().then(() => {
+      newtodo.save().then(() => {
         res.status(200).json({
           message: "Todo inserted successfully"
         })
